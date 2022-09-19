@@ -6,7 +6,7 @@ from schemas.new_employee import new_emp
 
 app = FastAPI()
 
-#Root module
+# Root module
 @app.get("/")
 def root():
     return {"Welcome to API"}
@@ -14,7 +14,7 @@ def root():
 
 # Get Employee data
 @app.get("/user")
-def get_user(id: int):
+async def get_user(id: int):
     # commend to fetch data from database using sqlalchmy and mysql
     data = conn.execute(Employee.select().where(Employee.c.id == id)).first()
     if data:
@@ -34,7 +34,7 @@ async def set_user(emp: new_emp):
 
     emails = conn.execute(
         Employee.select().where(Employee.c.email == emp.email)
-        ).first()
+    ).first()
     if emails:
         return {"email already exist"}
     else:
@@ -49,7 +49,7 @@ async def set_user(emp: new_emp):
 
 # Edit employee data which already registered
 @app.put("/edituser")
-def edt_use(id: int, emp: edit_emp):
+async def edt_use(id: int, emp: edit_emp):
     ids = conn.execute(Employee.select().where(Employee.c.id == id)).first()
     if ids:
         conn.execute(
