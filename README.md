@@ -1,5 +1,6 @@
 "# FastAPI-and-mysql-" 
 # Run requirement.txt for installing required packages
+
 # use pip install -r requirement.txt command to run the file
 
 # queries.txt is for example syntaxs
