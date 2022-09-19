@@ -25,7 +25,7 @@ def get_user(id: int):
 
 @app.post("/adduser")
 async def set_user(emp : new_emp):
-        value = {'name' : emp.name ,'email' : emp.email,'address' : emp.address}
+        value = {'name' : emp.name.capitalize() ,'email' : emp.email,'address' : emp.address.capitalize()}
         emails = conn.execute(Employee.select().where(Employee.c.email == emp.email)).first()
         if emails:
             return{'data':'email already exist'}
@@ -42,14 +42,14 @@ async def set_user(emp : new_emp):
 def edt_use(id : int, emp : edit_emp):
             ids = conn.execute(Employee.select().where(Employee.c.id == id)).first()
             if ids:
-                conn.execute(Employee.update().where(Employee.c.id == id).values(name = emp.name,address = emp.address))
+                conn.execute(Employee.update().where(Employee.c.id == id).values(name = emp.name.capitalize(),address = emp.address.capitalize()))
                 return{'data':'Updated success'}
             else:
                 return{'data':'Data not found'}
         
 
-@app.delete("/deleteuser/{id}")
-def del_usr(id : str):
+@app.delete("/deleteuser")
+def del_usr(id : int):
     ids = conn.execute(Employee.select().where(Employee.c.id == id)).first()
     if ids:
         conn.execute(Employee.delete().where(Employee.c.id == id))
