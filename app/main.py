@@ -12,7 +12,7 @@ def root():
 
 
 
-@app.get("/user/{id}")
+@app.get("/user")
 def get_user(id: int):
     #commend to fetch data from database using sqlalchmy and mysql
     data = conn.execute(Employee.select().where(Employee.c.id == id)).first()
@@ -38,18 +38,22 @@ async def set_user(emp : new_emp):
 
 
 
-@app.put("/edituser/{email}")
-def edt_use(email : str, emp : edit_emp):
-            emails = conn.execute(Employee.select().where(Employee.email == email))
-            if emails:
-                conn.execute(Employee.update().values(name = emp.name,address = emp.address))
+@app.put("/edituser")
+def edt_use(id : int, emp : edit_emp):
+            ids = conn.execute(Employee.select().where(Employee.c.id == id)).first()
+            if ids:
+                conn.execute(Employee.update().where(Employee.c.id == id).values(name = emp.name,address = emp.address))
                 return{'data':'Updated success'}
             else:
                 return{'data':'Data not found'}
         
 
 @app.delete("/deleteuser/{id}")
-def del_usr(id : int):
-    conn.execute(Employee.delete().where(Employee.c.id == id)).first()
-    return {'data' :'employee deleted success'}
+def del_usr(id : str):
+    ids = conn.execute(Employee.select().where(Employee.c.id == id)).first()
+    if ids:
+        conn.execute(Employee.delete().where(Employee.c.id == id))
+        return{'Employee deleted sucessfully'}
+    else:
+        return{'Employee record not found'}        
 
