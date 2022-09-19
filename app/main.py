@@ -8,7 +8,7 @@ app = FastAPI()
 
 @app.get("/")
 def root():
-    return {"data": "hello"}
+    return {"Welcome to API"}
 
 
 
@@ -19,7 +19,7 @@ def get_user(id: int):
     if data:
         return data
     else:
-        return {"data": "data not found"}
+        return {"data not found"}
 
 
 
@@ -28,13 +28,13 @@ async def set_user(emp : new_emp):
         value = {'name' : emp.name.capitalize() ,'email' : emp.email,'address' : emp.address.capitalize()}
         emails = conn.execute(Employee.select().where(Employee.c.email == emp.email)).first()
         if emails:
-            return{'data':'email already exist'}
+            return{'email already exist'}
         else:
             #command to pass data to the database
             conn.execute(Employee.insert().values(value))
             id = conn.execute(Employee.select().where(Employee.c.email == emp.email)).first()
             if id:
-                return {'data':'Employee added sucessfully'}
+                return {'Employee added sucessfully'}
 
 
 
@@ -43,9 +43,9 @@ def edt_use(id : int, emp : edit_emp):
             ids = conn.execute(Employee.select().where(Employee.c.id == id)).first()
             if ids:
                 conn.execute(Employee.update().where(Employee.c.id == id).values(name = emp.name.capitalize(),address = emp.address.capitalize()))
-                return{'data':'Updated success'}
+                return{'Updated success'}
             else:
-                return{'data':'Data not found'}
+                return{'Data not found'}
         
 
 @app.delete("/deleteuser")
