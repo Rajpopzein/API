@@ -11,7 +11,7 @@ def root():
     return {"Welcome to API"}
 
 
-
+#Get Employee data
 @app.get("/user")
 def get_user(id: int):
     #commend to fetch data from database using sqlalchmy and mysql
@@ -22,7 +22,7 @@ def get_user(id: int):
         return {"data not found"}
 
 
-
+#Add New employee 
 @app.post("/adduser")
 async def set_user(emp : new_emp):
         value = {'name' : emp.name.capitalize() ,'email' : emp.email,'address' : emp.address.capitalize()}
@@ -37,7 +37,7 @@ async def set_user(emp : new_emp):
                 return {'Employee added sucessfully'}
 
 
-
+#Edit employee data which already registered
 @app.put("/edituser")
 def edt_use(id : int, emp : edit_emp):
             ids = conn.execute(Employee.select().where(Employee.c.id == id)).first()
@@ -48,6 +48,8 @@ def edt_use(id : int, emp : edit_emp):
                 return{'Data not found'}
         
 
+        
+#Delete Employee data
 @app.delete("/deleteuser")
 def del_usr(id : int):
     ids = conn.execute(Employee.select().where(Employee.c.id == id)).first()
