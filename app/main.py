@@ -75,5 +75,3 @@ def del_usr(id: int):
         return {"Employee record not found"}
 
 
-if __name__ == "__main__":
-    uvicorn.run(app,port=8000,host='54.197.26.104')
