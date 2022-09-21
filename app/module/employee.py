@@ -1,7 +1,4 @@
-from enum import unique
-from pickle import TRUE
-import string
-from sqlalchemy import Table, Column , UniqueConstraint
+from sqlalchemy import Table, Column
 from sqlalchemy.sql.sqltypes import Integer , String
 from database.database import engine , Meta
 
