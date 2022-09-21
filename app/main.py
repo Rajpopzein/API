@@ -3,7 +3,6 @@ from database.database import conn
 from module.employee import Employee
 from schemas.edit import edit_emp
 from schemas.new_employee import new_emp
-import uvicorn
 
 
 app = FastAPI()
@@ -75,3 +74,8 @@ def del_usr(id: int):
         return {"Employee record not found"}
 
 
+#get all users
+@app.get("/alluser")
+def get_usr():
+    datas = conn.execute(Employee.select()).fetchall()
+    return(datas)
