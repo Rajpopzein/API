@@ -77,5 +77,5 @@ def del_usr(id: int):
 #get all users
 @app.get("/alluser")
 def get_usr():
-    datas = conn.execute(Employee.select()).fetchall()
-    return(datas)
+    #datas = conn.execute(Employee.select()).fetchall()
+    return conn.execute(Employee.select()).fetchall()
